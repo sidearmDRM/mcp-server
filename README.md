@@ -1,4 +1,4 @@
-# @sdrm/mcp
+# @sidearmdrm/mcp
 
 MCP server for the [Sidearm API](https://sdrm.io) — protect media from AI training, detect AI-generated content, and search for stolen work.
 
@@ -21,7 +21,7 @@ Add to your MCP configuration file:
   "mcpServers": {
     "sdrm": {
       "command": "npx",
-      "args": ["-y", "@sdrm/mcp"],
+      "args": ["-y", "@sidearmdrm/mcp"],
       "env": {
         "SDRM_API_KEY": "sk_live_..."
       }
@@ -37,7 +37,7 @@ Add to your MCP configuration file:
   "mcpServers": {
     "sdrm": {
       "command": "npx",
-      "args": ["-y", "@sdrm/mcp"],
+      "args": ["-y", "@sidearmdrm/mcp"],
       "env": {
         "SDRM_API_KEY": "sk_live_..."
       }
