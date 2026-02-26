@@ -19,6 +19,7 @@ import { register as updateMedia } from "./tools/update-media.js";
 import { register as deleteMedia } from "./tools/delete-media.js";
 import { register as getRights } from "./tools/get-rights.js";
 import { register as getBilling } from "./tools/get-billing.js";
+import { register as getProvenance } from "./tools/get-provenance.js";
 
 const apiKey = process.env.SDRM_API_KEY;
 if (!apiKey) {
@@ -33,7 +34,7 @@ const api = new ApiClient(apiKey, process.env.SDRM_BASE_URL);
 
 const server = new McpServer({
   name: "sdrm",
-  version: "0.1.0",
+  version: "0.2.0",
 });
 
 // Discovery
@@ -65,6 +66,9 @@ deleteMedia(server, api);
 // Rights & billing
 getRights(server, api);
 getBilling(server, api);
+
+// Provenance
+getProvenance(server, api);
 
 const transport = new StdioServerTransport();
 await server.connect(transport);
