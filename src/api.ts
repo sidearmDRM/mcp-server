@@ -9,6 +9,10 @@ export class ApiClient {
     this.baseUrl = (baseUrl ?? DEFAULT_BASE_URL).replace(/\/$/, "");
   }
 
+  getBaseUrl(): string {
+    return this.baseUrl;
+  }
+
   async get<T = unknown>(
     path: string,
     params?: Record<string, string | undefined>,

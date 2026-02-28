@@ -1,6 +1,6 @@
 {
   "name": "@sidearmdrm/mcp",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "MCP server exposing Sidearm media protection tools — watermarking, AI detection, and similarity search for AI agents",
   "type": "module",
   "bin": {
