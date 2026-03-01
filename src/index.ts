@@ -5,6 +5,7 @@ import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js"
 import { ApiClient } from "./api.js";
 import { register as listAlgorithms } from "./tools/list-algorithms.js";
 import { register as runAlgorithm } from "./tools/run-algorithm.js";
+import { register as extractEmbeddings } from "./tools/extract-embeddings.js";
 import { register as protectMedia } from "./tools/protect-media.js";
 import { register as checkJob } from "./tools/check-job.js";
 import { register as searchMedia } from "./tools/search-media.js";
@@ -37,14 +38,15 @@ const api = new ApiClient(apiKey, process.env.SDRM_BASE_URL);
 
 const server = new McpServer({
   name: "sdrm",
-  version: "0.4.0",
+  version: "0.6.0",
 });
 
 // Discovery
 listAlgorithms(server, api);
 
-// Protection
+// Protection & extraction
 runAlgorithm(server, api);
+extractEmbeddings(server, api);
 protectMedia(server, api);
 
 // Jobs
