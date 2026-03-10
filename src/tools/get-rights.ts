@@ -6,8 +6,9 @@ export function register(server: McpServer, api: ApiClient): void {
   server.tool(
     "get_rights",
     "Get rights and licensing information for a registered media asset. " +
-      "Returns C2PA content credentials, Schema.org structured data, IPTC rights metadata, " +
-      "and TDM-AI protocol declarations. Useful for verifying provenance and license terms.",
+      "Returns { rights: { ai_training_allowed, acquire_license_url, ... }, " +
+      "protocols: { c2pa, schema_org, iptc, tdm, rsl } }. " +
+      "No authentication required — this is the public discovery endpoint.",
     {
       media_id: z.string().describe("UUID of the media asset"),
     },
