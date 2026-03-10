@@ -5,10 +5,10 @@ import type { ApiClient } from "../api.js";
 export function register(server: McpServer, api: ApiClient): void {
   server.tool(
     "detect_fingerprint",
-    "Detect whether media has been previously registered or seen, using fingerprint matching. " +
-      "Compares against your indexed library at varying depth. " +
+    "Detect whether media has been previously registered or watermarked. " +
+      "Uses POST /api/v1/detect to compare against your indexed library at varying depth. " +
       "Tiers: exact (hash match), quick (perceptual hash), perceptual (visual similarity), " +
-      "compositional (scene structure), full (all tiers). Returns results immediately.",
+      "compositional (scene structure), full (all tiers). Returns results synchronously.",
     {
       media_url: z
         .string()

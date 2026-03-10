@@ -22,6 +22,12 @@ import { register as getRights } from "./tools/get-rights.js";
 import { register as getBilling } from "./tools/get-billing.js";
 import { register as getProvenance } from "./tools/get-provenance.js";
 import { register as identifyMedia } from "./tools/identify-media.js";
+import { register as createShare } from "./tools/create-share.js";
+import { register as getShare } from "./tools/get-share.js";
+import { register as publishShare } from "./tools/publish-share.js";
+import { register as listDeletions } from "./tools/list-deletions.js";
+import { register as getDeletion } from "./tools/get-deletion.js";
+import { register as getAccount } from "./tools/get-account.js";
 import { register as searchDocs } from "./tools/search-docs.js";
 import { register as navigateUi } from "./tools/navigate-ui.js";
 
@@ -38,7 +44,7 @@ const api = new ApiClient(apiKey, process.env.SDRM_BASE_URL);
 
 const server = new McpServer({
   name: "sdrm",
-  version: "0.7.0",
+  version: "0.8.0",
 });
 
 // Discovery
@@ -68,13 +74,23 @@ getMedia(server, api);
 updateMedia(server, api);
 deleteMedia(server, api);
 
-// Rights & billing
+// Account, rights & billing
+getAccount(server, api);
 getRights(server, api);
 getBilling(server, api);
 
 // Provenance & identification
 getProvenance(server, api);
 identifyMedia(server, api);
+
+// Shares
+createShare(server, api);
+getShare(server, api);
+publishShare(server, api);
+
+// Deletion records
+listDeletions(server, api);
+getDeletion(server, api);
 
 // Docs
 searchDocs(server, api);
