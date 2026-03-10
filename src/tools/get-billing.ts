@@ -10,7 +10,10 @@ export function register(server: McpServer, api: ApiClient): void {
       "billing events, and a link to the Stripe customer portal. " +
       "Filter by date range, event type, tags, or API token.",
     {
-      account_id: z.string().describe("Your account UUID"),
+      account_id: z
+        .string()
+        .default("me")
+        .describe('Your account UUID, or "me" to use the authenticated account'),
       start_date: z
         .string()
         .optional()
