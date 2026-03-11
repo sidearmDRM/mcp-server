@@ -46,9 +46,25 @@ Add to your MCP configuration file:
 }
 ```
 
+**Windsurf** (`~/.codeium/windsurf/mcp_config.json`):
+
+```json
+{
+  "mcpServers": {
+    "sdrm": {
+      "command": "npx",
+      "args": ["-y", "@sidearmdrm/mcp"],
+      "env": {
+        "SDRM_API_KEY": "sk_live_..."
+      }
+    }
+  }
+}
+```
+
 That's it. Your agent can now call Sidearm tools.
 
-## Tools
+## Tools (27)
 
 ### Discovery
 
@@ -56,12 +72,13 @@ That's it. Your agent can now call Sidearm tools.
 |------|-------------|
 | `list_algorithms` | Browse available protection algorithms. Filter by category or media type. |
 
-### Protection
+### Protection & Extraction
 
 | Tool | Description |
 |------|-------------|
 | `run_algorithm` | Run specific algorithms on media by ID. Returns a job for async processing. |
 | `protect_media` | Protect media with a preset level (standard/maximum). Auto-selects algorithms. |
+| `extract_embeddings` | Extract raw embedding vectors from media for downstream similarity search or ML pipelines. |
 
 ### Jobs
 
@@ -88,18 +105,48 @@ That's it. Your agent can now call Sidearm tools.
 
 | Tool | Description |
 |------|-------------|
-| `register_media` | Register and index media. Optionally apply watermarks on ingest. |
-| `list_media` | List media assets in your library (paginated). |
-| `get_media` | Get details of a specific media asset. |
+| `register_media` | Register and index media with optional protection mode (register, search_ready, standard, maximum). |
+| `list_media` | List media assets in your library (paginated, filterable). |
+| `get_media` | Get details of a specific media asset including protection status and algorithms applied. |
 | `update_media` | Update media metadata (e.g., original URL). |
 | `delete_media` | Permanently delete a media asset and all associated data. |
 
-### Rights & Billing
+### Account, Rights & Billing
 
 | Tool | Description |
 |------|-------------|
+| `get_account` | Get your account details — ID, name, email, credit balance, and plan info. |
 | `get_rights` | Get C2PA, IPTC, and licensing information for a media asset. |
-| `get_billing` | View credit usage, API call history, and billing portal link. |
+| `get_billing` | View credit balance, usage breakdown, per-algorithm costs, and billing portal link. |
+
+### Provenance & Identification
+
+| Tool | Description |
+|------|-------------|
+| `get_provenance` | Get the full provenance chain for an asset — algorithms, C2PA manifest, membership results. |
+| `identify_media` | Identify media by its embedded Sidearm fingerprint and extract its C2PA provenance chain. |
+
+### Shares
+
+| Tool | Description |
+|------|-------------|
+| `create_share` | Create a shareable link for a detection, search, or provenance result (starts private). |
+| `get_share` | Get a shared result by its share ID. |
+| `publish_share` | Make a shared result publicly accessible. |
+
+### Deletion Records
+
+| Tool | Description |
+|------|-------------|
+| `list_deletions` | List deletion records documenting permanently deleted assets. |
+| `get_deletion` | Get details of a specific deletion record including purged algorithms and storage status. |
+
+### Documentation
+
+| Tool | Description |
+|------|-------------|
+| `search_docs` | Search the Sidearm API documentation. Returns relevant sections from the full developer reference. |
+| `navigate_ui` | Look up how to perform actions in the Sidearm dashboard. Returns step-by-step instructions. |
 
 ## Example Agent Conversations
 
@@ -118,6 +165,14 @@ That's it. Your agent can now call Sidearm tools.
 > "Is this photo AI-generated?"
 >
 > Agent calls `detect_ai` with the image, then `check_job` for results.
+
+> "Was my artwork used to train Stable Diffusion?"
+>
+> Agent calls `detect_membership` with your media IDs and the model name.
+
+> "How do I upload files in the dashboard?"
+>
+> Agent calls `navigate_ui` with `query: "upload files"` for step-by-step instructions.
 
 ## Environment Variables
 
