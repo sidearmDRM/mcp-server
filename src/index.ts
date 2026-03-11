@@ -44,7 +44,7 @@ const api = new ApiClient(apiKey, process.env.SDRM_BASE_URL);
 
 const server = new McpServer({
   name: "sdrm",
-  version: "0.8.0",
+  version: "0.8.1",
 });
 
 // Discovery
