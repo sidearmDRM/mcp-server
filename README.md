@@ -116,7 +116,7 @@ That's it. Your agent can now call Sidearm tools.
 | Tool | Description |
 |------|-------------|
 | `get_account` | Get your account details — ID, name, email, credit balance, and plan info. |
-| `get_rights` | Get C2PA, IPTC, and licensing information for a media asset. |
+| `get_rights` | Get C2PA, IPTC, and rights information for a media asset. |
 | `get_billing` | View credit balance, usage breakdown, per-algorithm costs, and billing portal link. |
 
 ### Provenance & Identification

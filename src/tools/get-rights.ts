@@ -5,7 +5,7 @@ import type { ApiClient } from "../api.js";
 export function register(server: McpServer, api: ApiClient): void {
   server.tool(
     "get_rights",
-    "Get rights and licensing information for a registered media asset. " +
+    "Get rights and provenance information for a registered media asset. " +
       "Returns { rights: { ai_training_allowed, acquire_license_url, ... }, " +
       "protocols: { c2pa, schema_org, iptc, tdm, rsl } }. " +
       "No authentication required — this is the public discovery endpoint.",
