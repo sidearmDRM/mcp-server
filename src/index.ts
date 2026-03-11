@@ -31,20 +31,19 @@ import { register as getAccount } from "./tools/get-account.js";
 import { register as searchDocs } from "./tools/search-docs.js";
 import { register as navigateUi } from "./tools/navigate-ui.js";
 
-const apiKey = process.env.SDRM_API_KEY;
-if (!apiKey) {
+const api = new ApiClient(process.env.SDRM_API_KEY, process.env.SDRM_BASE_URL);
+
+if (!api.hasApiKey()) {
   process.stderr.write(
-    "Error: SDRM_API_KEY environment variable is required.\n" +
+    "Warning: SDRM_API_KEY is not set. Documentation and discovery tools are available, " +
+      "but API operations require an API key.\n" +
       "Get your API key at https://sdrm.io/api-keys\n",
   );
-  process.exit(1);
 }
-
-const api = new ApiClient(apiKey, process.env.SDRM_BASE_URL);
 
 const server = new McpServer({
   name: "sdrm",
-  version: "0.8.1",
+  version: "0.9.0",
 });
 
 // Discovery

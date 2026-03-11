@@ -2,9 +2,9 @@ const DEFAULT_BASE_URL = "https://api.sdrm.io";
 
 export class ApiClient {
   private baseUrl: string;
-  private apiKey: string;
+  private apiKey: string | undefined;
 
-  constructor(apiKey: string, baseUrl?: string) {
+  constructor(apiKey?: string, baseUrl?: string) {
     this.apiKey = apiKey;
     this.baseUrl = (baseUrl ?? DEFAULT_BASE_URL).replace(/\/$/, "");
   }
@@ -13,10 +13,15 @@ export class ApiClient {
     return this.baseUrl;
   }
 
+  hasApiKey(): boolean {
+    return !!this.apiKey;
+  }
+
   async get<T = unknown>(
     path: string,
     params?: Record<string, string | undefined>,
   ): Promise<T> {
+    this.requireAuth();
     const url = new URL(`${this.baseUrl}${path}`);
     if (params) {
       for (const [k, v] of Object.entries(params)) {
@@ -27,6 +32,7 @@ export class ApiClient {
   }
 
   async post<T = unknown>(path: string, body: unknown): Promise<T> {
+    this.requireAuth();
     return this.request<T>(new URL(`${this.baseUrl}${path}`), {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -35,6 +41,7 @@ export class ApiClient {
   }
 
   async patch<T = unknown>(path: string, body: unknown): Promise<T> {
+    this.requireAuth();
     return this.request<T>(new URL(`${this.baseUrl}${path}`), {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
@@ -43,9 +50,19 @@ export class ApiClient {
   }
 
   async delete<T = unknown>(path: string): Promise<T> {
+    this.requireAuth();
     return this.request<T>(new URL(`${this.baseUrl}${path}`), {
       method: "DELETE",
     });
+  }
+
+  private requireAuth(): void {
+    if (!this.apiKey) {
+      throw new Error(
+        "SDRM_API_KEY is not set. Get your API key at https://sdrm.io/api-keys " +
+          "and add it to your MCP configuration under env.SDRM_API_KEY",
+      );
+    }
   }
 
   private async request<T>(url: URL, init: RequestInit): Promise<T> {
